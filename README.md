@@ -15,3 +15,9 @@ Votre site web devra permettre la saisie de nouveaux usagers et des commentaires
  Vous devrez aussi pouvoir insérer de nouveau jeux à l'aide d'un fichier. Si l'auteur n'existe pas, il sera crée avec le nom et le prénom La structure du fichier attendu devra bien sur être décrite soit dans une aide, soit en préambule de la page de chargement.
 
 Vous devrez être à même de pouvoir générer une fiche pour un joueur, avec sa liste de jeux et les commentaires qu'il a pu faire sur chaque jeux ainsi que la note moyenne du jeu
+
+
+
+Veuilez utiliser la commnade :"cd myproject", avant démarrer le serveur.
+Pour accéder à la page film-list.html, veuillez utiliser le lien suivant :http://127.0.0.1:8000/
+projet de Hamed AL-ABRI
