@@ -154,11 +154,11 @@ def joueur_delete(request, id):
 # les commentaires
 def display_commentaire(request, commentaire_id):
     commentaire = get_object_or_404(Commentaire, pk=commentaire_id)
-    return render(request, 'display_commentaire.html', {'joueur': commentaire})
+    return render(request, 'commentaire/display_commentaire.html', {'joueur': commentaire})
 
 def commentaireList(request):
     commentaires = Commentaire.objects.all()
-    return render(request,'commentaire_liste.html',{'commentaires': commentaires})
+    return render(request,'commentaire/commentaire_liste.html',{'commentaires': commentaires})
 
 def commentaire_create(request):
     if request.method == 'POST':
@@ -168,7 +168,7 @@ def commentaire_create(request):
             return redirect('commentaire-liste')
     else:
         form = CommentaireForm()
-    return render(request, 'commentaire_create.html', {'form': form})
+    return render(request, 'commentaire/commentaire_create.html', {'form': form})
 
 def commentaire_update(request, id):
     commentaire = get_object_or_404(Commentaire, pk=id)
@@ -179,7 +179,7 @@ def commentaire_update(request, id):
             return redirect('commentaire-liste')
     else:
         form = CommentaireForm(instance=commentaire)
-    return render(request, 'commentaire_update.html', {'form': form})
+    return render(request, 'commentaire/commentaire_update.html', {'form': form})
 
 def commentaire_delete(request, id):
     commentaire = get_object_or_404(Commentaire, pk=id)

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="jeu-detail">
+    <h2>Commentaire:</h2>
+    <p><strong>jeu:</strong>{{ commentaire.jeu.titre }}</p>
+    <p><strong>descriptif:</strong>{{ commentaire.joueur.prenom }} {{ commentaire.joueur.nom }}</p>
+</div>
+{% endblock %}
