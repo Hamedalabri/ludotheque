@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card-body">
+    <h4>Liste des Jeux</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Titre</th>
+                <th scope="col">Annee de Sortir</th>
+                <th scope="col">Photo</th>
+                <th scope="col">Editeur</th>
+                <th scope="col">Auteur</th>
+                <th scope="col">Categorie</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for jeu in jeux %}
+            <tr>
+                <td>{{ jeu.titre }}</td>
+                <td>{{ jeu.annee_sortie }}</td>
+                <td>{{ jeu.photo_boite }}</td>
+                <td>{{ jeu.editeur }}</td> 
+                <td>{{ jeu.auteur.nom }}</td> 
+                <td>{{ jeu.categorie.nom }}</td>
+                <td>
+                    <a type="button" class="btn btn-warning" href="{% url 'update_jeu' jeu.id %}">Modifier</a>
+                    <form action="{% url 'delete_jeu' jeu.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                    <a type="button" class="btn btn-success" href="{% url 'display_jeu' jeu.id %}">Affiche</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <section class="table">
+        <a type="button" class="btn btn-success" href="{% url 'create_jeu' %}">Créer</a>
+        <a type="button" class="btn btn-success" href="{% url 'create_categorie' %}">Ajouter une Catégorie</a>
+        <a type="button" class="btn btn-success" href="{% url 'categorie-liste' %}">Liste des Catégories</a>
+    </section>
+</div>
+{% endblock %}

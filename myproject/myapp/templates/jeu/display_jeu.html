@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="jeu-detail">
+    <h2>{{ jeu.titre }}</h2>
+    <p><strong>Annee de sortir:</strong>{{ jeu.annee_sortie }}</p>
+    <p><strong>Photo:</strong>{{ jeu.photo_boite }}</p>
+    <p><strong>Editeur:</strong>{{ jeu.editeur }}</p>
+    <p><strong>Auteur:</strong>{{ jeu.auteur.nom }}</p>
+    <p><strong>Categorie:</strong>{{ jeu.categorie.nom }}</p>
+</div>
+{% endblock %}
