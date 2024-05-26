@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card-body">
+    <h4>Liste des Categories</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Categorie</th>
+                <th scope="col">Descriptif</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for categorie in categories %}
+            <tr>
+                <td>{{ categorie.nom }}</td>
+                <td>{{ categorie.descriptif }}</td>
+                <td>
+                    <a type="button" class="btn btn-warning" href="{% url 'update_categorie' categorie.id %}">Modifier</a>
+                    <form action="{% url 'delete_categorie' categorie.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                    <a type="button" class="btn btn-success" href="{% url 'display_categorie' categorie.id %}">Affiche</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <section class="table">
+        <a type="button" class="btn btn-success" href="{% url 'create_categorie' %}">Créer</a>
+    </section>
+</div>
+{% endblock %}

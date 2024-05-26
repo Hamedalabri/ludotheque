@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card-body">
+    <h4>Créer un nouveau Categorie</h4>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <section class="table">
+            <a type="button" class="btn btn-danger" href="{% url 'categorie-liste' %}">Annuler</a>
+            <button type="submit" class="btn btn-success">Créer</button>
+    
+        </section>
+        
+    </form>
+    
+</div>
+{% endblock %}
