@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card-body">
+    <h4>Liste des Joueurs</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Prenom</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Mail</th>
+                <th scope="col">Type</th>
+                <th scope="col">Action</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for joueur in joueurs %}
+            <tr>
+                <td>{{ joueur.prenom }}</td>
+                <td>{{ joueur.nom }}</td>
+                <td>{{ joueur.mail }}</td>
+                <td>{{ joueur.type }}</td> 
+                <td>
+                    <a type="button" class="btn btn-warning" href="{% url 'update_joueur' joueur.id %}">Modifier</a>
+                    <form action="{% url 'delete_joueur' joueur.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                    <a type="button" class="btn btn-success" href="{% url 'display_joueur' joueur.id %}">Affiche</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <section class="table">
+        <a type="button" class="btn btn-success" href="{% url 'create_joueur' %}">Créer</a>
+    </section>
+</div>
+{% endblock %}

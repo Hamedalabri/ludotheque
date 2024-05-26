@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Ludothèque{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'design.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="{% url 'home' %}" class="logo">Ludothèque</a>
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}">Acceuil</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>Ludothèque</p>
+        </div>
+    </footer>
+</body>
+</html>

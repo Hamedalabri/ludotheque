@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="jeu-detail">
+    <h2>{{ joueur.prenom }} {{ joueur.nom }}</h2>
+    <p><strong>mail:</strong>{{ joueur.mail }}</p>
+    <p><strong>Type:</strong>{{ joueur.type }}</p>
+</div>
+{% endblock %}
