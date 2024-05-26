@@ -1,7 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Categorie, Auteur, Jeu, Joueur, Commentaire
-from .forms import CategorieForm, AuteurForm, JeuForm, JoueurForm, CommentaireForm
-from django.http import HttpResponse
+from .forms import CategorieForm, AuteurForm, JeuForm, JoueurForm, CommentaireForm , UploadFileForm
+from django.db.models import Avg
+import csv
+
+
 
 def home(request):
     return render(request, 'home.html')
@@ -84,7 +87,22 @@ def auteur_delete(request, id):
 # les jeux
 def display_jeu(request, jeu_id):
     jeu = get_object_or_404(Jeu, pk=jeu_id)
-    return render(request, 'jeu/display_jeu.html', {'jeu': jeu})
+    commentaires = Commentaire.objects.filter(jeu=jeu)
+
+    moyenne_notes = commentaires.aggregate(moyenne=Avg('note'))['moyenne']
+    commentaire_max = commentaires.order_by('-note').first()
+    commentaire_min = commentaires.order_by('note').first()
+
+    context = {
+        'jeu': jeu,
+        'commentaires': commentaires,
+        'moyenne_notes': moyenne_notes,
+        'commentaire_max': commentaire_max,
+        'commentaire_min': commentaire_min,
+    }
+    return render(request, 'jeu/display_jeu.html', context)
+
+    #return render(request, 'jeu/display_jeu.html', {'jeu': jeu})
 
 def jeuList(request):
     jeux = Jeu.objects.all()
@@ -119,7 +137,16 @@ def jeu_delete(request, id):
 # les joueurs
 def display_joueur(request, joueur_id):
     joueur = get_object_or_404(Joueur, pk=joueur_id)
-    return render(request, 'joueur/display_joueur.html', {'joueur': joueur})
+    commentaires = Commentaire.objects.filter(joueur=joueur)
+    jeux_commented = Jeu.objects.filter(commentaire__in=commentaires).distinct()
+
+    context = {
+        'joueur': joueur,
+        'jeux_commented': jeux_commented,
+        'commentaires': commentaires,
+    }
+    return render(request, 'joueur/display_joueur.html', context)
+    #return render(request, 'joueur/display_joueur.html', {'joueur': joueur})
 
 def joueurList(request):
     joueurs = Joueur.objects.all()
@@ -185,3 +212,25 @@ def commentaire_delete(request, id):
     commentaire = get_object_or_404(Commentaire, pk=id)
     commentaire.delete()
     return redirect('commentaire-liste')
+
+
+
+# Uploads
+
+def handle_uploaded_file(f):
+    reader = csv.reader(f)
+    for row in reader:
+        titre, annee_sortie, photo_boite, editeur, auteur_nom, auteur_prenom, categorie_id = row
+        auteur, created = Auteur.objects.get_or_create(nom=auteur_nom, prenom=auteur_prenom)
+        categorie = get_object_or_404(Categorie, id=categorie_id)
+        Jeu.objects.create(titre=titre, annee_sortie=annee_sortie, photo_boite=photo_boite, editeur=editeur, auteur=auteur, categorie=categorie)
+
+def upload_file(request):
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            handle_uploaded_file(request.FILES['file'])
+            return redirect('jeu-liste')
+    else:
+        form = UploadFileForm()
+    return render(request, 'upload.html', {'form': form})

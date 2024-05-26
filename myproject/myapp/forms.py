@@ -45,4 +45,7 @@ class JoueurForm(forms.ModelForm):
 class CommentaireForm(forms.ModelForm):
     class Meta:
         model = Commentaire
-        fields = ['jeu', 'joueur', 'note', 'commentaire']
+        fields = ['jeu', 'joueur', 'note', 'commentaire', ]
+
+class UploadFileForm(forms.Form):
+    file = forms.FileField()

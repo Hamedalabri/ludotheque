@@ -40,4 +40,7 @@ urlpatterns = [
     path('commentaires/update/<int:id>/', views.commentaire_update, name='update_commentaire'),
     path('commentaires/delete/<int:id>/', views.commentaire_delete, name='delete_commentaire'),
     path('commentaires/<int:commentaire_id>/', views.display_commentaire, name='display_commentaire'),
+
+    # upload
+    path('jeux/upload/', views.upload_file, name='upload_file'),
 ]

@@ -1,3 +1,4 @@
+from datetime import datetime
 from statistics import mode
 from django.db import models
 
@@ -41,9 +42,10 @@ class Joueur(models.Model):
 class Commentaire(models.Model):
     jeu = models.ForeignKey(Jeu, on_delete=models.CASCADE)
     joueur = models.ForeignKey(Joueur, on_delete=models.CASCADE)
+    date = models.DateTimeField(default=datetime.now, blank=True)
     note = models.IntegerField()
     commentaire = models.TextField()
+    #type_personne = models.CharField(max_length=100, default='unknown')
 
-
-    #def __str__(self):
-      #  return f"{self.} - {self.}"
+    def __str__(self):
+        return f"{self.joueur} - {self.date}"

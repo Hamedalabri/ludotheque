@@ -5,5 +5,19 @@
     <h2>{{ joueur.prenom }} {{ joueur.nom }}</h2>
     <p><strong>mail:</strong>{{ joueur.mail }}</p>
     <p><strong>Type:</strong>{{ joueur.type }}</p>
+
+    <h3>Jeux commentés</h3>
+    <ul>
+        {% for jeu in jeux_commented %}
+            <li>{{ jeu.titre }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Commentaires</h3>
+    <ul>
+        {% for commentaire in commentaires %}
+            <li>{{ commentaire.jeu.titre }}: {{ commentaire.note }} /10<br>{{ commentaire.commentaire }}</li>
+        {% endfor %}
+    </ul>
 </div>
 {% endblock %}

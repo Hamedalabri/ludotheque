@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="upload-section">
+    <h2>Téléchargez un fichier pour ajouter des jeux</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Téléchargez</button>
+    </form>
+    <p>Format du fichier attendu: titre, annee_sortie, photo_boite, editeur, auteur_nom, auteur_prenom, categorie_id</p>
+</div>
+{% endblock %}
