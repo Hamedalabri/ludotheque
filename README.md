@@ -19,5 +19,5 @@ Vous devrez être à même de pouvoir générer une fiche pour un joueur, avec s
 
 
 Veuilez utiliser la commnade :"cd myproject", avant démarrer le serveur.
-Pour accéder à la page film-list.html, veuillez utiliser le lien suivant :http://127.0.0.1:8000/
+Pour accéder à la page d'acceuil, veuillez utiliser le lien suivant :http://127.0.0.1:8000/
 projet de Hamed AL-ABRI
