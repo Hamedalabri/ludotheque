@@ -6,7 +6,7 @@
     <p><strong>Annee de sortir:</strong>{{ jeu.annee_sortie }}</p>
     <p><strong>Photo:</strong>
     {% if jeu.photo_boite %}
-        <img src="{{ jeu.photo_boite.url }}" alt="{{ jeu.titre }}">
+        <img src="{{ jeu.photo_boite.url }}" alt="{{ jeu.titre }}" style="max-height:100px">
     {% else %}
         Pas de photo disponible
     {% endif %}
@@ -25,6 +25,7 @@
     <p><strong>Commentaire avec la plus basse note:</strong></p>
     <p>{{ commentaire_min.joueur.nom }}: {{ commentaire_min.note }} /10</p>
     <p>{{ commentaire_min.commentaire }}</p>
+
 
 
 </div>

@@ -110,7 +110,7 @@ def jeuList(request):
 
 def jeu_create(request):
     if request.method == 'POST':
-        form = JeuForm(request.POST)
+        form = JeuForm(request.POST , request.FILES)
         if form.is_valid():
             form.save()
             return redirect('jeu-liste')
@@ -121,7 +121,7 @@ def jeu_create(request):
 def jeu_update(request, id):
     jeu = get_object_or_404(Jeu, pk=id)
     if request.method == 'POST':
-        form = JeuForm(request.POST, instance=jeu)
+        form = JeuForm(request.POST, request.FILES ,instance=jeu)
         if form.is_valid():
             form.save()
             return redirect('jeu-liste')

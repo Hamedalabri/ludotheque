@@ -13,7 +13,7 @@ class Auteur(models.Model):
     nom = models.CharField(max_length=200)
     prenom = models.CharField(max_length=200)
     age = models.IntegerField()
-    photos = models.ImageField(upload_to='photos/', blank=True, null=True)
+    photos = models.ImageField(upload_to='photos', blank=True, null=True)
 
     def __str__(self):
         return self.nom
@@ -21,7 +21,7 @@ class Auteur(models.Model):
 class Jeu(models.Model):
     titre = models.CharField(max_length=200)
     annee_sortie = models.IntegerField(default=2000)
-    photo_boite = models.ImageField(upload_to='photos/', blank=True, null=True)
+    photo_boite = models.ImageField(upload_to='photo_boite', blank=True, null=True)
     editeur = models.CharField(max_length=200)
     auteur = models.ForeignKey(Auteur, on_delete=models.CASCADE, blank=True, null=True)
     categorie = models.ForeignKey(Categorie, on_delete=models.CASCADE, blank=True, null=True)
