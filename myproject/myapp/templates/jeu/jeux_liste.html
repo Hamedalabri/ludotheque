@@ -19,7 +19,11 @@
             <tr>
                 <td>{{ jeu.titre }}</td>
                 <td>{{ jeu.annee_sortie }}</td>
-                <td>{{ jeu.photo_boite }}</td>
+                <td>{% if jeu.photo_boite %}
+                    <img src="{{ jeu.photo_boite.url }}" alt="{{ jeu.titre }}" style="max-height:100px">
+                {% else %}
+                    Pas de photo disponible
+                {% endif %}</td>
                 <td>{{ jeu.editeur }}</td> 
                 <td>{{ jeu.auteur.nom }}</td> 
                 <td>{{ jeu.categorie.nom }}</td>
