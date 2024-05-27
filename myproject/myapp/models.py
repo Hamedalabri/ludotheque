@@ -1,6 +1,7 @@
 from datetime import datetime
 from statistics import mode
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 class Categorie(models.Model):
     nom = models.CharField(max_length=200)
@@ -43,7 +44,7 @@ class Commentaire(models.Model):
     jeu = models.ForeignKey(Jeu, on_delete=models.CASCADE)
     joueur = models.ForeignKey(Joueur, on_delete=models.CASCADE)
     date = models.DateTimeField(default=datetime.now, blank=True)
-    note = models.IntegerField()
+    note = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(20)], default=0)
     commentaire = models.TextField()
     #type_personne = models.CharField(max_length=100, default='unknown')
 
