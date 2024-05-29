@@ -4,6 +4,11 @@
 <div class="jeu-detail">
     <h2>{{ auteur.prenom }} {{ auteur.nom }}</h2>
     <p><strong>age:</strong>{{ auteur.age }}</p>
-    <p><strong>Photo:</strong>{{ auteur.photos }}</p>
+    <p><strong>Photo:</strong>
+    {% if auteur.photos %}
+        <img src="{{ auteur.photos.url }}" alt="{{ auteur.nom }}" style="max-height:100px">
+    {% else %}
+        Pas de photo disponible
+    {% endif %}</p>
 </div>
 {% endblock %}

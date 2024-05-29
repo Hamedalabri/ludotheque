@@ -60,7 +60,7 @@ def auteurList(request):
 
 def auteur_create(request):
     if request.method == 'POST':
-        form = AuteurForm(request.POST)
+        form = AuteurForm(request.POST , request.FILES)
         if form.is_valid():
             form.save()
             return redirect('auteur-liste')
@@ -71,7 +71,7 @@ def auteur_create(request):
 def auteur_update(request, id):
     auteur = get_object_or_404(Auteur, pk=id)
     if request.method == 'POST':
-        form = AuteurForm(request.POST, instance=auteur)
+        form = AuteurForm(request.POST, request.FILES, instance=auteur)
         if form.is_valid():
             form.save()
             return redirect('auteur-liste')
@@ -234,3 +234,8 @@ def upload_file(request):
     else:
         form = UploadFileForm()
     return render(request, 'upload.html', {'form': form})
+
+
+def home(request):
+    jeu = Jeu.objects.first()  # Select the game to feature, adjust the query as needed
+    return render(request, 'home.html', {'jeu': jeu})

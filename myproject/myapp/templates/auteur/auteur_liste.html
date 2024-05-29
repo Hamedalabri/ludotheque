@@ -20,7 +20,11 @@
                 <td>{{ auteur.prenom }}</td>
                 <td>{{ auteur.nom }}</td>
                 <td>{{ auteur.age }}</td>
-                <td>{{ auteur.photos }}</td> 
+                <td>{% if auteur.photos %}
+                    <img src="{{ auteur.photos.url }}" alt="{{ auteur.nom }}" style="max-height:100px">
+                {% else %}
+                    Pas de photo disponible
+                {% endif %}</td> 
                 <td>
                     <a type="button" class="btn btn-warning" href="{% url 'update_auteur' auteur.id %}">Modifier</a>
                     <form action="{% url 'delete_auteur' auteur.id %}" method="post" style="display:inline;">
