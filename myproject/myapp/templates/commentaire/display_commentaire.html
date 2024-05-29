@@ -3,7 +3,14 @@
 {% block content %}
 <div class="jeu-detail">
     <h2>Commentaire:</h2>
-    <p><strong>jeu:</strong>{{ commentaire.jeu.titre }}</p>
-    <p><strong>descriptif:</strong>{{ commentaire.joueur.prenom }} {{ commentaire.joueur.nom }}</p>
+    <p><strong>Jeu:</strong>{{ commentaire.jeu.titre }}</p>
+    <p><strong>Joueur:</strong>{{ commentaire.joueur.prenom }} {{ commentaire.joueur.nom }}</p>
+    <p><strong>note:</strong>{{ commentaire.note }}</p>
+    <p><strong>commentaire:</strong>{{ commentaire.commentaire }}</p>
+    <p><strong>date:</strong>{{ commentaire.date }}</p>
+    <p><strong>mail:</strong>{{ commentaire.joueur.mail }}</p>
+    <p><strong>Type:</strong>{{ commentaire.joueur.type }}</p>
+    <a type="button" class="btn btn-success" href="{% url 'commentaire-liste' %}">Revenir à la liste</a>
 </div>
+
 {% endblock %}

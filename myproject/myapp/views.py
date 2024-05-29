@@ -181,7 +181,7 @@ def joueur_delete(request, id):
 # les commentaires
 def display_commentaire(request, commentaire_id):
     commentaire = get_object_or_404(Commentaire, pk=commentaire_id)
-    return render(request, 'commentaire/display_commentaire.html', {'joueur': commentaire})
+    return render(request, 'commentaire/display_commentaire.html', {'commentaire': commentaire})
 
 def commentaireList(request):
     commentaires = Commentaire.objects.all()
@@ -216,14 +216,33 @@ def commentaire_delete(request, id):
 
 
 # Uploads
-
-def handle_uploaded_file(f):
-    reader = csv.reader(f)
+def handle_uploaded_file(file):
+    decoded_file = file.read().decode('utf-8').splitlines()
+    reader = csv.DictReader(decoded_file)
     for row in reader:
-        titre, annee_sortie, photo_boite, editeur, auteur_nom, auteur_prenom, categorie_id = row
-        auteur, created = Auteur.objects.get_or_create(nom=auteur_nom, prenom=auteur_prenom)
-        categorie = get_object_or_404(Categorie, id=categorie_id)
-        Jeu.objects.create(titre=titre, annee_sortie=annee_sortie, photo_boite=photo_boite, editeur=editeur, auteur=auteur, categorie=categorie)
+        auteur, created = Auteur.objects.get_or_create(
+            nom=row['auteur_nom'],
+            prenom=row['auteur_prenom'],
+            defaults={'age': row.get('auteur_age', None)}
+        )
+        if not created and row.get('auteur_age'):
+            auteur.age = row['auteur_age']
+            auteur.save()
+        
+        try:
+            categorie = Categorie.objects.get(id=row['categorie_id'])
+        except Categorie.DoesNotExist:
+            print(f"Skipping row due to missing category: {row}")
+            continue
+        
+        Jeu.objects.create(
+            titre=row['titre'],
+            annee_sortie=row['annee_sortie'],
+            photo_boite=row['photo_boite'],
+            editeur=row['editeur'],
+            auteur=auteur,
+            categorie=categorie
+        )
 
 def upload_file(request):
     if request.method == 'POST':
@@ -237,5 +256,5 @@ def upload_file(request):
 
 
 def home(request):
-    jeu = Jeu.objects.first()  # Select the game to feature, adjust the query as needed
+    jeu = Jeu.objects.first()  
     return render(request, 'home.html', {'jeu': jeu})

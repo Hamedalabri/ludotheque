@@ -6,9 +6,10 @@
     <p><strong>age:</strong>{{ auteur.age }}</p>
     <p><strong>Photo:</strong>
     {% if auteur.photos %}
-        <img src="{{ auteur.photos.url }}" alt="{{ auteur.nom }}" style="max-height:100px">
+        <img src="{{ auteur.photos.url }}" alt="{{ auteur.nom }}" style="max-height:200px">
     {% else %}
         Pas de photo disponible
     {% endif %}</p>
+    <a type="button" class="btn btn-success" href="{% url 'auteur-liste' %}">Revenir à la liste</a>
 </div>
 {% endblock %}

@@ -6,7 +6,7 @@
     <p><strong>Annee de sortir:</strong>{{ jeu.annee_sortie }}</p>
     <p><strong>Photo:</strong>
     {% if jeu.photo_boite %}
-        <img src="{{ jeu.photo_boite.url }}" alt="{{ jeu.titre }}" style="max-height:100px">
+        <img src="{{ jeu.photo_boite.url }}" alt="{{ jeu.titre }}" style="max-height:150px">
     {% else %}
         Pas de photo disponible
     {% endif %}
@@ -16,16 +16,17 @@
     <p><strong>Categorie:</strong>{{ jeu.categorie.nom }}</p>
 
     <h3>Commentaires</h3>
-    <p><strong>Note moyenne de tous les commentaires:</strong> {{ moyenne_notes|default:"Pas de notes disponibles" }} /10</p>
+    <p><strong>Note moyenne de tous les commentaires:</strong> {{ moyenne_notes|default:"Pas de notes disponibles" }} /20</p>
 
     <p><strong>Commentaire avec la plus haute note:</strong></p>
-    <p>{{ commentaire_max.joueur.nom }}: {{ commentaire_max.note }} /10</p>
+    <p>{{ commentaire_max.joueur.nom }}: {{ commentaire_max.note }} /20</p>
     <p>{{ commentaire_max.commentaire }}</p>
 
     <p><strong>Commentaire avec la plus basse note:</strong></p>
-    <p>{{ commentaire_min.joueur.nom }}: {{ commentaire_min.note }} /10</p>
+    <p>{{ commentaire_min.joueur.nom }}: {{ commentaire_min.note }} /20</p>
     <p>{{ commentaire_min.commentaire }}</p>
 
+    <a type="button" class="btn btn-success" href="{% url 'jeu-liste' %}">Revenir à la liste</a>
 
 
 </div>

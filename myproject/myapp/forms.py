@@ -41,11 +41,15 @@ class JoueurForm(forms.ModelForm):
         widgets = {
             'mot_de_passe': forms.PasswordInput(),
         }
+        
 
 class CommentaireForm(forms.ModelForm):
     class Meta:
         model = Commentaire
         fields = ['jeu', 'joueur', 'note', 'commentaire', ]
+        labels = {
+            'note': ('Note sur /20'),
+        }
 
 class UploadFileForm(forms.Form):
     file = forms.FileField()

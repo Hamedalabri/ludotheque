@@ -4,5 +4,6 @@
 <div class="jeu-detail">
     <h2>Categorie: {{ categorie.nom }}</h2>
     <p><strong>descriptif:</strong>{{ categorie.descriptif }}</p>
+    <a type="button" class="btn btn-success" href="{% url 'categorie-liste' %}">Revenir à la liste</a>
 </div>
 {% endblock %}

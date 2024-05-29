@@ -19,5 +19,6 @@
             <li>{{ commentaire.jeu.titre }}: {{ commentaire.note }} /10<br>{{ commentaire.commentaire }}</li>
         {% endfor %}
     </ul>
+    <a type="button" class="btn btn-success" href="{% url 'joueur-liste' %}">Revenir à la liste</a>
 </div>
 {% endblock %}
