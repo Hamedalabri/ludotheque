@@ -47,7 +47,6 @@ class Commentaire(models.Model):
     note = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(20)], default=0)
     commentaire = models.TextField()
     #type_personne = models.CharField(max_length=100, default='unknown')
-    #type_personne = models.CharField(max_length=100, default='unknown')
 
 
     def __str__(self):
