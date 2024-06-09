@@ -26,6 +26,7 @@ urlpatterns = [
     path('jeux/delete/<int:id>/', views.jeu_delete, name='delete_jeu'),
     path('jeux/<int:jeu_id>/', views.display_jeu, name='display_jeu'),
     path('jeu-list/categorie/<str:categorie_nom>/', views.jeux_liste_par_categorie, name='jeux-liste-par-categorie'),
+    
 
     # joueurs
     path('joueurs/', views.joueurList, name='joueur-liste'),
@@ -33,6 +34,7 @@ urlpatterns = [
     path('joueurs/update/<int:id>/', views.joueur_update, name='update_joueur'),
     path('joueurs/delete/<int:id>/', views.joueur_delete, name='delete_joueur'),
     path('joueurs/<int:joueur_id>/', views.display_joueur, name='display_joueur'),
+    path('joueur/<int:pk>/pdf/', views.joueur_pdf_view, name='joueur-pdf'),
 
     # commentaires
     path('commentaires/', views.commentaireList, name='commentaire-liste'),

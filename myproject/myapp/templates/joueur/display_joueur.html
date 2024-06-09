@@ -16,9 +16,10 @@
     <h3>Commentaires</h3>
     <ul>
         {% for commentaire in commentaires %}
-            <li>{{ commentaire.jeu.titre }}: {{ commentaire.note }} /10<br>{{ commentaire.commentaire }}</li>
+            <li>{{ commentaire.jeu.titre }}: {{ commentaire.note }} /20<br>{{ commentaire.commentaire }}</li>
         {% endfor %}
     </ul>
     <a type="button" class="btn btn-success" href="{% url 'joueur-liste' %}">Revenir à la liste</a>
+    <a type="button" class="btn btn-success" href="{% url 'joueur-pdf' joueur.pk %}">Télécharger PDF</a>
 </div>
 {% endblock %}

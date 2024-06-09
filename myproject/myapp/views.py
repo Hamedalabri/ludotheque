@@ -3,7 +3,12 @@ from .models import Categorie, Auteur, Jeu, Joueur, Commentaire
 from .forms import CategorieForm, AuteurForm, JeuForm, JoueurForm, CommentaireForm , UploadFileForm
 from django.db.models import Avg
 import csv
-
+from django.http import HttpResponse
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from reportlab.lib.styles import getSampleStyleSheet , ParagraphStyle
+from reportlab.platypus import Paragraph
+from reportlab.lib.units import inch
 
 
 def home(request):
@@ -134,6 +139,9 @@ def jeu_delete(request, id):
     jeu.delete()
     return redirect('jeu-liste')
 
+
+
+
 # les joueurs
 def display_joueur(request, joueur_id):
     joueur = get_object_or_404(Joueur, pk=joueur_id)
@@ -177,6 +185,71 @@ def joueur_delete(request, id):
     joueur = get_object_or_404(Joueur, pk=id)
     joueur.delete()
     return redirect('joueur-liste')
+
+def joueur_pdf_view(request, pk):
+    joueur = Joueur.objects.get(pk=pk)
+    commentaires = Commentaire.objects.filter(joueur=joueur)
+    jeux_commented = {commentaire.jeu for commentaire in commentaires}
+
+    # Create the HttpResponse object with the appropriate PDF headers.
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="joueur_{joueur.nom}.pdf"'
+
+    # Create the PDF object, using the response object as its "file."
+    p = canvas.Canvas(response, pagesize=letter)
+    width, height = letter
+
+    # Set default font and size
+    font_size = 12
+    p.setFont("Helvetica", font_size)
+
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    p.drawString(100, height - 50, f"Nom: {joueur.nom}")
+    p.drawString(100, height - 70, f"Prenom: {joueur.prenom}")
+    p.drawString(100, height - 90, f"Mail: {joueur.mail}")
+    p.drawString(100, height - 110, f"Type: {joueur.type}")
+
+    p.drawString(100, height - 130, "Jeux commentés:")
+    y = height - 150
+    for jeu in jeux_commented:
+        p.drawString(120, y, f"- {jeu.titre}")
+        y -= 20
+
+    p.drawString(100, y - 20, "Commentaires:")
+    y -= 40
+
+    styles = getSampleStyleSheet()
+    comment_style = ParagraphStyle(
+        'Comment',
+        parent=styles['BodyText'],
+        fontName='Helvetica',
+        fontSize=font_size,
+        leading=font_size + 2,
+        spaceAfter=10,
+    )
+
+    for commentaire in commentaires:
+        p.drawString(120, y, f"{commentaire.jeu.titre}: {commentaire.note}/20")
+        y -= 20
+
+        text = commentaire.commentaire
+        paragraph = Paragraph(text, comment_style)
+        text_width, text_height = paragraph.wrap(width - 140, y)
+        if y - text_height < 0:
+            p.showPage()
+            p.setFont("Helvetica", font_size)
+            y = height - 50
+            p.drawString(100, y, "Commentaires (suite):")
+            y -= 20
+
+        paragraph.drawOn(p, 120, y - text_height)
+        y -= text_height + 20
+
+    # Close the PDF object cleanly.
+    p.showPage()
+    p.save()
+
+    return response
 
 # les commentaires
 def display_commentaire(request, commentaire_id):
