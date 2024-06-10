@@ -186,24 +186,25 @@ def joueur_delete(request, id):
     joueur.delete()
     return redirect('joueur-liste')
 
+# telecharger le pdf
 def joueur_pdf_view(request, pk):
     joueur = Joueur.objects.get(pk=pk)
     commentaires = Commentaire.objects.filter(joueur=joueur)
     jeux_commented = {commentaire.jeu for commentaire in commentaires}
 
-    # Create the HttpResponse object with the appropriate PDF headers.
+    
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = f'attachment; filename="joueur_{joueur.nom}.pdf"'
 
-    # Create the PDF object, using the response object as its "file."
+    
     p = canvas.Canvas(response, pagesize=letter)
     width, height = letter
 
-    # Set default font and size
+   
     font_size = 12
     p.setFont("Helvetica", font_size)
 
-    # Draw things on the PDF. Here's where the PDF generation happens.
+    
     p.drawString(100, height - 50, f"Nom: {joueur.nom}")
     p.drawString(100, height - 70, f"Prenom: {joueur.prenom}")
     p.drawString(100, height - 90, f"Mail: {joueur.mail}")
@@ -245,7 +246,7 @@ def joueur_pdf_view(request, pk):
         paragraph.drawOn(p, 120, y - text_height)
         y -= text_height + 20
 
-    # Close the PDF object cleanly.
+    
     p.showPage()
     p.save()
 
