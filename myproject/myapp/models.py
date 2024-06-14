@@ -13,7 +13,7 @@ class Categorie(models.Model):
 class Auteur(models.Model):
     nom = models.CharField(max_length=200)
     prenom = models.CharField(max_length=200)
-    age = models.IntegerField()
+    age = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], default=0)
     photos = models.ImageField(upload_to='photos', blank=True, null=True)
 
     def __str__(self):

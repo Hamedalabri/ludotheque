@@ -297,7 +297,8 @@ def handle_uploaded_file(file):
         auteur, created = Auteur.objects.get_or_create(
             nom=row['auteur_nom'],
             prenom=row['auteur_prenom'],
-            defaults={'age': row.get('auteur_age', None)}
+            defaults={'age': row.get('auteur_age', None)},
+            photos=row.get('auteur_photos', None)
         )
         if not created and row.get('auteur_age'):
             auteur.age = row['auteur_age']
