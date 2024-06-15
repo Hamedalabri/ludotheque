@@ -1,0 +1,57 @@
+CREATE DATABASE ludotheque;
+
+USE ludotheque;
+
+CREATE TABLE Categories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    descriptif TEXT
+);
+
+CREATE TABLE Auteurs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    prenom VARCHAR(100) NOT NULL,
+    age INT,
+    photos VARCHAR(255)
+);
+
+CREATE TABLE Jeux (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titre VARCHAR(100) NOT NULL,
+    annee_sortie YEAR,
+    photo_boite VARCHAR(255),
+    editeur VARCHAR(100),
+    auteur_id INT,
+    categorie_id INT,
+    FOREIGN KEY (auteur_id) REFERENCES Auteurs(id),
+    FOREIGN KEY (categorie_id) REFERENCES Categories(id)
+);
+
+CREATE TABLE Joueurs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    prenom VARCHAR(100) NOT NULL,
+    mail VARCHAR(100) NOT NULL UNIQUE,
+    mot_de_passe VARCHAR(100) NOT NULL,
+    type ENUM('professionnel', 'particulier') NOT NULL
+);
+
+CREATE TABLE Commentaires (
+    jeu_id INT,
+    joueur_id INT,
+    note INT CHECK (note BETWEEN 1 AND 5),
+    commentaire TEXT,
+    date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (jeu_id, joueur_id, date),
+    FOREIGN KEY (jeu_id) REFERENCES Jeux(id),
+    FOREIGN KEY (joueur_id) REFERENCES Joueurs(id)
+);
+
+CREATE TABLE ListesJeux (
+    joueur_id INT,
+    jeu_id INT,
+    PRIMARY KEY (joueur_id, jeu_id),
+    FOREIGN KEY (joueur_id) REFERENCES Joueurs(id),
+    FOREIGN KEY (jeu_id) REFERENCES Jeux(id)
+);
